@@ -106,6 +106,7 @@
 , "escape-string-regexp"
 , "eslint"
 , "esy"
+, "eufy-security-ws"
 , "expo-cli"
 , "fast-cli"
 , "fauna-shell"
