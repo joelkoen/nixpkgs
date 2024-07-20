@@ -34,12 +34,12 @@ stdenv.mkDerivation rec {
     domain = "gitlab.freedesktop.org";
     owner = "geoclue";
     repo = "geoclue";
-    rev = version;
-    hash = "sha256-vzarUg4lBEXYkH+n9SY8SYr0gHUX94PSTDmKd957gyc=";
+    rev = "edcef40a47a38f3967ff64a4c9b7b322c4b455fb";
+    hash = "sha256-YequN3G8PNxba9nQoL0VKtDR2VywnnpzGmcD8Cq1dF8=";
   };
 
   patches = [
-    ./add-option-for-installation-sysconfdir.patch
+    # ./add-option-for-installation-sysconfdir.patch
   ];
 
   nativeBuildInputs = [
@@ -65,7 +65,8 @@ stdenv.mkDerivation rec {
     libsoup_3
     avahi
   ] ++ lib.optionals withDemoAgent [
-    libnotify gdk-pixbuf
+    libnotify
+    gdk-pixbuf
   ] ++ lib.optionals (!stdenv.isDarwin) [
     modemmanager
   ];
@@ -78,9 +79,9 @@ stdenv.mkDerivation rec {
   mesonFlags = [
     "-Dsystemd-system-unit-dir=${placeholder "out"}/etc/systemd/system"
     "-Ddemo-agent=${lib.boolToString withDemoAgent}"
-    "--sysconfdir=/etc"
-    "-Dsysconfdir_install=${placeholder "out"}/etc"
-    "-Dmozilla-api-key=5c28d1f4-9511-47ff-b11a-2bef80fc177c"
+    "-Dsysconfdir=${placeholder "out"}/etc"
+    # "-Dsysconfdir_install=${placeholder "out"}/etc"
+    # "-Dmozilla-api-key=5c28d1f4-9511-47ff-b11a-2bef80fc177c"
     "-Ddbus-srv-user=geoclue"
     "-Ddbus-sys-dir=${placeholder "out"}/share/dbus-1/system.d"
   ] ++ lib.optionals stdenv.isDarwin [
